@@ -1,0 +1,17 @@
+<div class="container-fluid">
+  <div class="row-fluid">
+    <%= render partial:'categories/category_list' %>
+
+    <div class="span9">
+      <div class="row-fluid">
+        <div class="span9">
+          <h4>Movies for: <%=@category.name %></h4>
+          <ul>
+            <% @movies.each do |movie| %>
+              <label><%= movie.title %></label>
+            <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

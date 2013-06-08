@@ -1,0 +1,12 @@
+<% #cache action_suffix:"all_categories" do %>
+  <div class="span3">
+    <div id="categories_list" class="well sidebar-nav">
+      <ul class="nav nav-list">
+        <li class="nav-header">Categories</li>
+        <% Category.order(:name).all.each do |category| %>
+          <li><%= link_to category.name, category_movies_path(category) %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+<% #end %>
