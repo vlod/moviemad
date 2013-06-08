@@ -11,7 +11,11 @@
               <label><%= movie.title %></label>
             <% end %>
         </div>
-        <%= paginate @movies %>
+      </div>
+      <div class="row-fluid">
+        <div class="span9">
+          <%= paginate @movies %>
+        </div>
       </div>
     </div>
   </div>
