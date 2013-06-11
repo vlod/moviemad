@@ -13,4 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
+//= require hogan.js
+//= require_tree ./templates
+//= require movies
 //= require_tree .

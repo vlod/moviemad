@@ -4,11 +4,16 @@
 
     <div class="span9">
       <div class="row-fluid">
-        <div class="span9">
+        <div class="span9 movie_list">
           <h4>Movies for: <%=@category.name %></h4>
           <ul>
             <% @movies.each do |movie| %>
-              <label><%= movie.title %></label>
+              <li id="m_<%=movie.id%>">
+                <% if movie.title_md5 %>
+                  <%= link_to movie.title, "#", "data-movie-id"=>"#{movie.id}", "class"=>"movie_entry" %>
+                <% else %>
+                  <label><%=movie.title%></label>
+                <% end %>
             <% end %>
         </div>
       </div>

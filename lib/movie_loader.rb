@@ -1,7 +1,8 @@
 class MovieLoader
   attr_accessor :movielens_id, :movie_title, :categories, :movie_categories, :released_at
   def initialize
-    @categories = {}  # category_name -> category_id
+    # lets cache these. map category_name -> category_id
+    @categories = Category.select([:name,:id]).all.inject({}) {|map, c| map[c.name] = c.id; map}
   end
 
   # e.g 1::Toy Story (1995)::Animation|Children's|Comedy
@@ -11,7 +12,7 @@ class MovieLoader
     @movielens_id, @movie_title, catgs = line.split("::")
 
     @released_at = @movie_title.match(/(\d{4})/)[1] # pull out the year 1995
-    @movie_title.gsub! /\s\(\d{4}\)$/,'' # rip out the year
+    @movie_title = cleanup_title @movie_title
 
     catgs.strip.split("|").each do |category_name|
       category_id = @categories[category_name]
@@ -35,5 +36,24 @@ class MovieLoader
     @movie_category_ids.each do |category_id|
       CategoryMovie.create category_id:category_id, movie_id:movie.id
     end
+  end
+
+  def cleanup_title text
+    text.gsub! /\s\(\d{4}\)$/,'' # rip out the year
+
+    # rip out foreign references which are normally in brackets
+    text.gsub! /\s\(.*?\)/, ''
+
+    # rename [Beverly Hillbillies, The] to [The Beverly Hillbillies]
+    comma_index = text.index(/,\s(The|Les|An|A|La)$/)
+    #puts "text:[#{text}] comma_index: #{comma_index}"
+    if comma_index
+      text = text[(comma_index+2)..-1]+" "+text[0..(comma_index-1)]
+    end
+
+    # general rubbish
+    text.gsub! /^(\.)*/,''
+
+    text
   end
 end

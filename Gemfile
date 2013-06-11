@@ -25,12 +25,17 @@ gem 'jquery-rails'
 gem 'ansi'
 gem 'bootstrap-sass'
 gem 'kaminari'
+gem 'curb'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
 # To use Jbuilder templates for JSON
-# gem 'jbuilder'
+gem 'jbuilder'
+
+group :assets do
+  gem 'hogan_assets' # https://github.com/leshill/hogan_assets
+end
 
 group :test do
   gem 'database_cleaner' # required by capybara

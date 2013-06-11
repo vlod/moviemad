@@ -1,5 +1,6 @@
 Moviemad::Application.routes.draw do
   resources :categories
+  resources :movies
 
   resources :categories do
     resources :movies

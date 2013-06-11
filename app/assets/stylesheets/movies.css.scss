@@ -1,0 +1,18 @@
+body.movies .movie_list {
+  ul {
+    margin-left: 10px;
+
+    li {
+      list-style:none;
+
+      label {
+        margin-bottom: 0;
+      }
+    }
+  }
+  .movie_details {
+    margin-left:10px;
+    border:1px solid #eee;
+    padding:10px;
+  }
+}

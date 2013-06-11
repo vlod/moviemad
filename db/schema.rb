@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130607204219) do
+ActiveRecord::Schema.define(:version => 20130608213159) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -28,14 +28,29 @@ ActiveRecord::Schema.define(:version => 20130607204219) do
 
   add_index "category_movies", ["category_id", "movie_id"], :name => "index_category_movies_on_category_id_and_movie_id"
 
+  create_table "movie_details", :force => true do |t|
+    t.integer  "movie_id"
+    t.datetime "released_at"
+    t.string   "runtime"
+    t.string   "plot"
+    t.string   "poster"
+    t.string   "imdbID"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "movie_details", ["movie_id"], :name => "index_movie_details_on_movie_id"
+
   create_table "movies", :force => true do |t|
     t.string   "title"
     t.integer  "movielens_id"
     t.datetime "released_at"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.string   "title_md5"
   end
 
   add_index "movies", ["movielens_id"], :name => "index_movies_on_movielens_id"
+  add_index "movies", ["title_md5"], :name => "index_movies_on_title_md5"
 
 end

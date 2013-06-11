@@ -19,7 +19,7 @@ describe MovieLoader do
     Movie.count.should == 1
     movie = Movie.where(movielens_id:1).first
     movie.title.should == "Toy Story"
-    movie.released_at.should === Time.new("1995-01-01 00:00 UTC")
+    movie.released_at.should == Time.new("1995-01-01 00:00 UTC")
     movie.movielens_id.should == 1
 
     # 3 categorys should be setup: Animation|Children's|Comedy
@@ -42,6 +42,16 @@ describe MovieLoader do
     all_categories.size.should == 5
     all_categories.has_key?("Adventure").should == true
     all_categories.has_key?("Fantasy").should == true
+  end
+
+  it "should rename movie title correctly" do
+    ml = MovieLoader.new
+
+    ml << "419::Beverly Hillbillies, The (1993)::Animation|Children's|Comedy"
+
+    ml.movie_title.should == "The Beverly Hillbillies"
+    ml.movielens_id.should == "419"
+    ml.released_at.should == "1993"
   end
 
   it "should handle adding the same movie multiple times" do
@@ -88,4 +98,35 @@ describe MovieLoader do
     categories.has_key?("Comedy").should == true
     categories.has_key?("Fantasy").should_not == true
   end
+
+  it "should cleanup titles" do
+    ml = MovieLoader.new
+    ml << "827::Convent, The (Convento, O) (1995)::Drama"
+    ml.movie_title.should == "The Convent"
+
+    ml << "1201::Good, The Bad and The Ugly, The (1966)::Action|Western"
+    ml.movie_title.should == "The Good, The Bad and The Ugly"
+
+    ml << "40::Cry, the Beloved Country (1995)::Drama"
+    ml.movie_title.should == "Cry, the Beloved Country"
+
+    ml << "73::Misérables, Les (1995)::Drama|Musical"
+    ml.movie_title.should == "Les Misérables"
+
+    ml << "97::Hate (Haine, La) (1995)::Drama"
+    ml.movie_title.should == "Hate"
+
+    ml << "119::Steal Big, Steal Little (1995)::Comedy"
+    ml.movie_title.should == "Steal Big, Steal Little"
+
+    ml << "148::Awfully Big Adventure, An (1995)::Drama"
+    ml.movie_title.should == "An Awfully Big Adventure"
+
+    ml << "185::Net, The (1995)::Sci-Fi|Thriller"
+    ml.movie_title.should == "The Net"
+
+    ml << "199::Umbrellas of Cherbourg, The (Parapluies de Cherbourg, Les) (1964)::Drama|Musical"
+    ml.movie_title.should == "The Umbrellas of Cherbourg"
+  end
+
 end
