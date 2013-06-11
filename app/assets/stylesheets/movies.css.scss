@@ -7,12 +7,22 @@ body.movies .movie_list {
 
       label {
         margin-bottom: 0;
+        cursor:default;
       }
     }
   }
-  .movie_details {
+  .movie_info {
     margin-left:10px;
     border:1px solid #eee;
     padding:10px;
+
+    .movie_poster {
+      float:left;
+    }
+    .movie_details {
+      float:left;
+      width:300px;
+      padding-left:10px;
+    }
   }
 }
